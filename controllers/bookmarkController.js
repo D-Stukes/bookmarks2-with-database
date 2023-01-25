@@ -1,13 +1,12 @@
 const express = require("express");
 const bookmarks = express.Router();
 const { checkName, checkBoolean, validateURL } = require("../validations/checkBookmarks.js");
-const {
-  getAllBookmarks,
-  getBookmark,
-  createBookmark,
-  deleteBookmark,
-  updateBookmark
+const {  getAllBookmarks, getBookmark, createBookmark, deleteBookmark,updateBookmark
 } = require("../queries/bookmarks");
+const reviewsController = require('../controllers/reviewsController')
+
+//MIDDLEWARE
+bookmarks.use('/:bookmarkId/reviews', reviewsController)
 
 // INDEX
 bookmarks.get("/", async (req, res) => {
@@ -15,7 +14,7 @@ bookmarks.get("/", async (req, res) => {
   if (allBookmarks[0]) {
     res.status(200).json(allBookmarks);
   } else {
-    res.status(500).json({ error: "server error" });
+ res.status(500).json({ error: "server error" });
   }
 });
 
@@ -58,4 +57,6 @@ bookmarks.put("/:id",checkName, checkBoolean, validateURL,  async (req, res) => 
   const updatedBookmark = await updateBookmark(id, req.body);
   res.status(200).json(updatedBookmark);
 });
+
+
 module.exports = bookmarks;

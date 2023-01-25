@@ -10,14 +10,6 @@ const checkName = (req, res, next) => {
   
   //CHECK BOOLEAN
   const checkBoolean = (req, res, next) => {
-    //ALTERNATIVE APPROACH
-    //   if (
-    //     typeof req.body.is_favorite === boolean ||
-    //     req.body.is_favorite === undefined
-    //   ) {
-    //     next();
-    //   }
-  
     if (
       req.body.is_favorite === true ||
       req.body.is_favorite === false ||
